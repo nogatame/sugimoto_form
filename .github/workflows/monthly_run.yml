@@ -1,0 +1,36 @@
+name: Monthly Automation
+
+on:
+  schedule:
+    # 毎月19日の日本時間 午前9時（UTC 0:00）
+    - cron: '55 4  5 * *'
+  workflow_dispatch: # ← これがあると手動でテスト実行できます
+  push:
+    branches:
+      - main # ← もし「コードをプッシュした時」にも動かしたいならここに書きます
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install pyotp
+          # 他に selenium や requests などを使っているならここに追加してください
+          # 例: pip install pyotp selenium
+          pip install pyotp playwright
+          playwright install --with-deps chromium
+          # --with-deps をつけることで、Linuxに必要なライブラリも一緒に自動インストールされます
+
+      - name: Run script
+        env:
+          LONG_PASSWORD: ${{ secrets.LONG_PASSWORD }}
+          TOTP_OMU: ${{ secrets.TOTP_OMU }}
+        run: python login_automation.py
