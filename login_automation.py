@@ -28,7 +28,7 @@ def login_and_open_form():
     with sync_playwright() as p:
         # ブラウザを起動 (headless=False で動作が見えるようにします)
         print("ブラウザを起動中...")
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         context = browser.new_context(locale="ja-JP")
         page = context.new_page()
 
