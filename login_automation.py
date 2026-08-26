@@ -125,7 +125,7 @@ def login_and_open_form():
             page.screenshot(path="error_trace.png")
         # 3ページ目の操作
         try:
-            page.wait_for_selector('input[type="radio"]', timeout=3000)
+            page.wait_for_selector('input[type="radio"]', timeout=6000)
             radio_buttons = page.locator("input[type='radio']").all()
             print(f"見つかったラジオボタンの数: {len(radio_buttons)}")
             radio_buttons[1].check(force=True)
@@ -141,7 +141,7 @@ def login_and_open_form():
             page.screenshot(path="error_trace.png")
         # 4ページ目の操作
         try:
-            page.wait_for_selector('input[aria-label="単一行テキスト"]', timeout=3000)
+            page.wait_for_selector('input[aria-label="単一行テキスト"]', timeout=6000)
             inputs = page.locator('input').all()
             print(f"見つかった入力フィールドの数: {len(inputs)}")
             inputs[0].fill(SUGIMOTO_ROOM)
