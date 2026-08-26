@@ -123,23 +123,15 @@ def login_and_open_form():
         except Exception as e:
             print(f"フォーム操作中にエラーが発生しました: {e}")
             page.screenshot(path="error_trace.png")
-        # 3ページ目の操作
+        # 3(4)ページ目の操作
         try:
             page.wait_for_selector('input[type="radio"]', timeout=6000)
             radio_buttons = page.locator("input[type='radio']").all()
             print(f"見つかったラジオボタンの数: {len(radio_buttons)}")
             radio_buttons[1].check(force=True)
-            # 「次へ」ボタンのクリック
-            # 複数のセレクタ候補（ID, テキスト, aria-label）を試行
-            
-            button = page.locator('button[data-automation-id="nextButton"]')
-            if button.is_visible():
-                print(f"「次へ」ボタンを検出。クリックします。")
-                button.click()
         except Exception as e:
             print(f"フォーム操作中にエラーが発生しました: {e}")
             page.screenshot(path="error_trace.png")
-        # 4ページ目の操作
         try:
             page.wait_for_selector('input[aria-label="単一行テキスト"]', timeout=6000)
             inputs = page.locator('input').all()
