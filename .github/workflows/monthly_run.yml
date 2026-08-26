@@ -15,7 +15,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        with:
+          ref: main # 明示的に main ブランチをチェックアウト
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -35,3 +38,10 @@ jobs:
           LONG_PASSWORD: ${{ secrets.LONG_PASSWORD }}
           TOTP_OMU: ${{ secrets.TOTP_OMU }}
         run: python login_automation.py
+      - name: Keepalive (Safe Empty Commit)
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          git commit --allow-empty -m "chore: keepalive [skip ci]"
+          git push origin main

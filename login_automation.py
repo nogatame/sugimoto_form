@@ -136,7 +136,7 @@ def login_and_open_form():
             page.wait_for_selector('input[aria-label="単一行テキスト"]', timeout=6000)
             inputs = page.locator('input').all()
             print(f"見つかった入力フィールドの数: {len(inputs)}")
-            inputs[0].fill(SUGIMOTO_ROOM)
+            inputs[2].fill(SUGIMOTO_ROOM)
             # 「次へ」ボタンのクリック
             button = page.locator('button[data-automation-id="nextButton"]')
             if button.is_visible():
